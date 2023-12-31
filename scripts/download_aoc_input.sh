@@ -2,17 +2,31 @@
 
 # Script to download Advent of Code input data for a specific day
 # Use firefox or chrome to get the session cookie, and pass it as an argument to this script.
-# Usage: ./download_aoc_input.sh <year> <day> <session_cookie>
+# Usage: ./download_aoc_input.sh <year> <day>
 
 # Check if all required arguments are provided
-if [ "$#" -lt 3 ] || [ "$#" -gt 4 ]; then
-    echo "Usage: $0 <year> <day> <session_cookie> [output_folder]"
+if [ "$#" -lt 2 ] || [ "$#" -gt 3 ]; then
+    echo "Usage: $0 <year> <day> [output_folder]"
+    exit 1
+fi
+
+# Load .env file from current or parent directory if it exists
+if [ -f .env ] || [ -f "../.env" ]; then
+    source "${BASH_SOURCE%/*}/.env" || source "${BASH_SOURCE%/*/*}/.env"
+    echo "Loaded .env file"
+else
+    echo "No .env file found in the current or parent directory."
+    exit 1
+fi
+
+if [ -z "$SESSION_COOKIE" ]; then
+    echo "SESSION_COOKIE is missing. Please add the SESSION_COOKIE in .env file"
     exit 1
 fi
 
 year=$1
 day=$(echo "$2" | sed 's/^0*//')  # Removing leading zeros
-session_cookie=$3
+session_cookie=$SESSION_COOKIE
 output_folder=${4:-"."}  # Default to current directory if no output folder is provided
 
 # Create URL for fetching input data
