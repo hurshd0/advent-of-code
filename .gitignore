@@ -1,2 +1,17 @@
-__pycache__/
+# Ignore IDE or editor-specific files
+.idea/
+.vscode/
+
+# Ignore system or temporary files
+.DS_Store
+Thumbs.db
+
+# Ignore environment variables file (if using)
+.env
+
+# Input
 *_input.txt
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
