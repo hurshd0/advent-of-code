@@ -27,7 +27,7 @@ fi
 year=$1
 day=$(echo "$2" | sed 's/^0*//')  # Removing leading zeros
 session_cookie=$SESSION_COOKIE
-output_folder=${4:-"."}  # Default to current directory if no output folder is provided
+output_folder=${3:-"."}  # Default to current directory if no output folder is provided
 
 # Create URL for fetching input data
 url="https://adventofcode.com/${year}/day/${day}/input"
