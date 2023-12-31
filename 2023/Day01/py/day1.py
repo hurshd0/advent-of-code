@@ -1,20 +1,13 @@
-import sys
+from utils.all import load_by_line
 
-def read_line(file_path):
-    with open(file_path, 'r') as f:
-        for line in f:
-            yield line.rstrip('\n')
-            
-
-# Open the first argument as input or use stdin if no arguments were given
-data = read_line(sys.argv[1]) if len(sys.argv) > 1 else sys.stdin
-
-
-def part_1(line):
+def part1(line):
     digits = [ ch for ch in line if ch.isdigit() ]
-    return int(digits[0] + digits[-1])
+    result = 0
+    if digits:
+        result = int(digits[0] + digits[-1])
+    return result
 
-def part_2(line):
+def part2(line):
     numbers = "one two three four five six seven eight nine".split()
     digits = []
     for idx, ch in enumerate(line):
@@ -28,13 +21,18 @@ def part_2(line):
     return int(digits[0] + digits[-1])
 
 
+data = load_by_line()
 
-total = 0
+part1_total = 0
+part2_total = 0
 for idx, line in enumerate(data):
     #print(f"Reading {idx+1}: {line}")
-    calib_val = part_2(line)
-    #print(f"Calibration Value {idx+1}: {calib_val}")
-    total += calib_val
+    part1_calib = part1(line)
+    part1_total += part1_calib
+    part2_calib = part2(line)
+    part2_total += part2_calib
+    #print(f"Part 1 Calib. Value {idx+1}: {part1_calib}")
+    #print(f"Part 2 Calib. Value {idx+1}: {part2_calib}")
     
-print(f'Total Calibration Value: {total}')
-        
+print(f"Part 1 Total Calib. Value: {part1_total}")
+print(f"Part 2 Total Calib. Value: {part2_total}")
